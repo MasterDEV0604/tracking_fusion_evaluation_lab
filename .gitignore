@@ -1,0 +1,10 @@
+/build/
+/outputs/
+*.o
+*.obj
+*.a
+*.so
+*.dylib
+*.exe
+*.user
+.DS_Store
