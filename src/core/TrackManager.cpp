@@ -1,5 +1,6 @@
 #include "core/TrackManager.h"
 #include "association/GlobalGreedyAssociator.h"
+#include "association/HungarianAssociator.h"
 #include "association/NearestNeighborAssociator.h"
 #include "fusion/SensorNormalizer.h"
 #include <algorithm>
@@ -22,6 +23,9 @@ void TrackManager::processFrame(const FramePacket& frame) {
     std::vector<AssociationPair> pairs;
     if (cfg_.association_mode == "nearest") {
         NearestNeighborAssociator assoc;
+        pairs = assoc.associate(states, detections, cfg_.gate_radius);
+    } else if (cfg_.association_mode == "hungarian") {
+        HungarianAssociator assoc;
         pairs = assoc.associate(states, detections, cfg_.gate_radius);
     } else {
         GlobalGreedyAssociator assoc;

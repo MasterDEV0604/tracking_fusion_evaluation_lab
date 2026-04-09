@@ -29,6 +29,7 @@ struct TrackState {
     int hits = 0;
     int misses = 0;
     int age = 0;
+    int first_frame = 0;
     bool confirmed = false;
     std::string dominant_source = "radar";
     int matched_truth_id = -1;
@@ -50,6 +51,7 @@ struct TrackerConfig {
     int max_misses = 4;
     double camera_confidence_scale = 0.85;
     double radar_confidence_scale = 1.0;
+    double lidar_confidence_scale = 1.05;
 };
 
 struct RunMetrics {
@@ -61,8 +63,11 @@ struct RunMetrics {
     int matched_updates = 0;
     int unmatched_detections = 0;
     int id_switches = 0;
+    int missed_truth_updates = 0;
+    int false_track_updates = 0;
     double mean_position_error = 0.0;
     double track_continuity = 0.0;
+    double mean_confirm_latency_frames = 0.0;
 };
 
 } // namespace tfel

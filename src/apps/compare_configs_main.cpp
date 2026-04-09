@@ -15,7 +15,7 @@ int main(int argc, char** argv) {
         tfel::Config loader;
         tfel::TrackingEngine engine;
         auto frames = reader.read(argv[1]);
-        std::cout << "dataset,config,mean_error,id_switches,tracks_created,unmatched_detections,continuity\n";
+        std::cout << "dataset,config,mean_error,id_switches,missed_truth,false_tracks,confirmed,confirm_latency\n";
         for (int i = 2; i < argc; ++i) {
             const std::string cfg_path = argv[i];
             auto cfg = loader.load(cfg_path);
@@ -25,9 +25,10 @@ int main(int argc, char** argv) {
                       << std::fixed << std::setprecision(3)
                       << result.metrics.mean_position_error << ','
                       << result.metrics.id_switches << ','
-                      << result.metrics.tracks_created << ','
-                      << result.metrics.unmatched_detections << ','
-                      << result.metrics.track_continuity << '\n';
+                      << result.metrics.missed_truth_updates << ','
+                      << result.metrics.false_track_updates << ','
+                      << result.metrics.confirmed_tracks << ','
+                      << result.metrics.mean_confirm_latency_frames << '\n';
         }
         return 0;
     } catch (const std::exception& e) {

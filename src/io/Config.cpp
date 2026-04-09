@@ -25,6 +25,7 @@ TrackerConfig Config::load(const std::string& path) const {
         else if (key == "max_misses") cfg.max_misses = std::stoi(val);
         else if (key == "camera_confidence_scale") cfg.camera_confidence_scale = std::stod(val);
         else if (key == "radar_confidence_scale") cfg.radar_confidence_scale = std::stod(val);
+        else if (key == "lidar_confidence_scale") cfg.lidar_confidence_scale = std::stod(val);
     }
     return cfg;
 }

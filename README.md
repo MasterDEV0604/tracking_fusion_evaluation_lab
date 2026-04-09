@@ -1,39 +1,37 @@
-# Tracking Fusion Evaluation Lab
+# Tracking Fusion Evaluation Lab — Fantastic Edition
 
-Tracking Fusion Evaluation Lab is a **C++17** flagship portfolio project for multi-target tracking, sensor normalization, data association, filtering, replay export, and benchmark-style evaluation.
+Tracking Fusion Evaluation Lab is a **C++17 tracking and fusion evaluation framework** designed to feel like a real internal autonomy R&D tool rather than a small demo.
 
-It is designed as the **technical engine** companion to a mission-control GUI project: detections come in from radar/camera-like sources, are normalized and associated into tracks, and are exported for replay, reporting, and parameter comparison.
+It answers a practical engineering question:
 
-## Why this repo is stronger than a demo
+> Which association, motion-model, and confidence-scaling choices produce the most stable tracks under clutter, crossing targets, and mixed sensor quality?
 
-This repository is structured like an internal engineering tool rather than a single algorithm exercise:
-- multiple command-line applications
-- reusable core library
-- scenario configs and benchmark runs
-- reproducible output artifacts
-- metrics and comparison reports
-- architecture and decision docs
-- tests and CI
+## What makes this version stronger
 
-## Main capabilities
-
-- CSV dataset ingestion with mixed sensor sources
-- configurable gating and promotion/deletion thresholds
-- nearest-neighbor and global-greedy association modes
-- constant-velocity and damped-velocity prediction choices
-- simple sensor normalization for radar/camera confidence weighting
-- confirmed/tentative track lifecycle handling
-- benchmark batch runner with metrics and markdown summaries
-- replay export for operator-style review
+- three association strategies: nearest, global-greedy, and hungarian-style assignment
+- multiple runnable tools for tracking, benchmarking, replay export, and scenario sweeps
+- config-driven experiments with mixed sensor reliability tuning
+- richer metrics: mean error, ID switches, missed truth updates, false-track updates, confirm latency
+- example datasets, reports, and outputs already included
+- docs that explain architecture, evaluation method, and design decisions
+- tests and CI for a believable engineering workflow
 
 ## Applications
 
 | App | Purpose |
 |---|---|
-| `tfel_run_tracker` | Run one config on one dataset and export tracks and summary files |
-| `tfel_benchmark` | Run all datasets/configs and produce leaderboard-style metrics |
-| `tfel_compare_configs` | Compare multiple configs on a single dataset |
-| `tfel_replay_export` | Export frame-by-frame replay text for debrief review |
+| `tfel_run_tracker` | Run one tracker config on one dataset and export tracks + summary |
+| `tfel_benchmark` | Benchmark every dataset against every config and emit markdown summary |
+| `tfel_compare_configs` | Compare a set of configs on one scenario |
+| `tfel_replay_export` | Produce frame-by-frame replay text for mission/debrief consumption |
+| `tfel_scenario_sweep` | Run config sweeps over all scenarios and write leaderboard artifacts |
+
+## Repo story
+
+This project is the **technical engine** in a larger autonomy-software portfolio:
+- a perception lab generates candidate detections
+- this repo normalizes, associates, and tracks them
+- a mission-control workstation can consume replay and report outputs
 
 ## Build
 
@@ -46,25 +44,28 @@ ctest --test-dir build --output-on-failure
 ## Quick start
 
 ```bash
-./build/tfel_run_tracker assets/datasets/harbor_patrol.csv config/balanced.cfg outputs/example_run
+./build/tfel_run_tracker assets/datasets/harbor_patrol.csv config/fusion_balanced.cfg outputs/example_run
 ./build/tfel_benchmark assets/datasets outputs/benchmark_report
-./build/tfel_compare_configs assets/datasets/intersection_conflict.csv config/aggressive.cfg config/balanced.cfg config/conservative.cfg
-./build/tfel_replay_export assets/datasets/harbor_patrol.csv config/balanced.cfg outputs/example_run/replay.txt
+./build/tfel_compare_configs assets/datasets/intersection_conflict.csv config/aggressive.cfg config/fusion_balanced.cfg config/crowded_scene.cfg
+./build/tfel_replay_export assets/datasets/urban_convoy.csv config/fusion_balanced.cfg outputs/urban_replay.txt
+./build/tfel_scenario_sweep assets/datasets config outputs/scenario_sweep
 ```
 
-## Portfolio story
+## Fantastic upgrade ideas already reflected here
 
-This repo helps you explain:
-- how detections from different sources are normalized
-- why association strategy matters during crossing targets
-- how tuning affects false tracks versus missed tracks
-- how you evaluate tracker behavior instead of only “running the filter”
-- how this technical engine can feed a larger mission or autonomy workstation
+- experiment-style dataset folders and scenario naming
+- a third assignment mode for crowded scenes
+- stronger benchmark and comparison artifacts for README screenshots
+- latency and false-track metrics that better match real tracker tuning work
+- outputs meant to feed a GUI mission workstation later
 
-## Recommended screenshots / future add-ons
+## Good GitHub screenshots to add later
 
-- benchmark result chart
-- replay snapshot viewer
-- per-track lifetime plot
-- confusion summary between configs
-- optional Qt/ImGui visualizer as a separate frontend
+- benchmark summary table
+- comparison CSV plotted as a bar chart
+- replay excerpt next to a scenario explanation
+- track lifetime chart and false-track count by config
+
+## Suggested interview pitch
+
+> I built a configurable C++ tracking/fusion evaluation framework that lets me compare association strategies, motion assumptions, and sensor confidence scaling across multiple scenarios. I used it to study tradeoffs like ID stability versus false-track growth and to generate artifacts that can feed a mission-control GUI.

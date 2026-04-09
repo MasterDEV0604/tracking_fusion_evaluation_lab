@@ -7,7 +7,7 @@ namespace tfel {
 
 struct BenchmarkRow {
     std::string dataset;
-    std::string config;
+    std::string config_name;
     RunMetrics metrics;
 };
 

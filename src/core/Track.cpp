@@ -9,6 +9,7 @@ Track::Track(int id, const Detection& seed, const TrackerConfig& cfg) : id_(id),
     state_.id = id_;
     state_.hits = 1;
     state_.age = 1;
+    state_.first_frame = seed.frame;
     state_.dominant_source = seed.source;
     state_.matched_truth_id = seed.truth_id;
     state_.confirmed = (state_.hits >= cfg.confirm_hits);
